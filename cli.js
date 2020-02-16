@@ -1,27 +1,44 @@
-// const { exec } = require("child_process");
-//
-// exec("npm install", (error, stdout, stderr) => {
-//    if (error) {
-//       console.log(`error: ${error.message}`);
-//       // return;
-//    }
-//    if (stderr) {
-//       console.log(`stderr: ${stderr}`);
-//       // return;
-//    }
-//    console.log(`stdout: ${stdout}`);
+#! /usr/bin/env node
+
+const { exec } = require("child_process");
+const fs = require("fs");
+const yargs = require("yargs");
+const lineReader = require('line-reader');
+const readline = require('readline');
+
+
+const argv = yargs
+   .command("npm", "run npm install command")
+   .help()
+   .argv;
+
+if(argv._[0] === "npm") {
+   exec("npm install");
+}
+if(!fs.existsSync("./.env")) {
+   fs.copyFile("./.env.example", "./.env", (err) => {
+      if(err) throw err;
+      console.log("file  copied");
+   });
+}
+// fs.open('./.env',"r+", (err, fd) => {
+//    console.log(fd);
+//    //fd is our file descriptor
 // });
-const npm = require('npm');
-npm.load(function(err) {
-   // handle errors
 
-   // install module ffi
-   npm.commands.install(['ffi'], function(er, data) {
-      // log errors or data
-   });
 
-   npm.on('log', function(message) {
-      // log installation progress
-      console.log(message);
-   });
+const readInterface = readline.createInterface({
+   input: fs.createReadStream('./.env'),
+   output: process.stdout,
+   console: false,
+   terminal: false
 });
+let env = {};
+readInterface.on('line', function(line) {
+   if(line) {
+      let envLine = line.split("=");
+      env[envLine[0]] = envLine[1];
+      console.log(env);
+   }
+});
+

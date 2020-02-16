@@ -1,0 +1,26 @@
+{
+  "name": "project-env-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "conf": "./cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buttererror/project-env-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/buttererror/project-env-api/issues"
+  },
+  "homepage": "https://github.com/buttererror/project-env-api#readme",
+  "dependencies": {
+    "line-reader": "^0.4.0",
+    "yargs": "^15.1.0"
+  }
+}
